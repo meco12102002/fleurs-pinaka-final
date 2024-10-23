@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.BouquetCustomizationActivity">
+
+    <!-- Buttons to switch between palettes -->
+    <LinearLayout
+        android:id="@+id/palette_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_alignParentTop="true">
+
+        <Button
+            android:id="@+id/button_flowers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_background"
+             android:text="@string/flowers"
+             android:textColor="@android:color/white"
+             android:padding="12dp"
+        android:layout_marginEnd="5dp" />
+
+        <Button
+            android:id="@+id/button_wraps"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_background"
+            android:text="@string/wraps"
+            android:textColor="@android:color/white"
+            android:padding="12dp"
+            android:layout_marginEnd="5dp" />
+
+        <Button
+            android:id="@+id/button_ribbons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_background"
+            android:text="@string/ribbons"
+            android:textColor="@android:color/white"
+            android:padding="12dp" />
+    </LinearLayout>
+
+    <!-- Palette for Flowers -->
+    <RelativeLayout
+        android:id="@+id/palette_flowers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightPink"
+        android:padding="10dp"
+        android:layout_below="@id/palette_selector"
+        android:visibility="visible">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_flowers"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="horizontal"
+            android:clipToPadding="false"
+            android:paddingEnd="10dp" />
+    </RelativeLayout>
+
+    <!-- Palette for Wraps -->
+    <RelativeLayout
+        android:id="@+id/palette_wraps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightPink"
+        android:padding="10dp"
+        android:layout_below="@id/palette_selector"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_wraps"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="horizontal"
+            android:clipToPadding="false"
+            android:paddingEnd="10dp" />
+    </RelativeLayout>
+
+    <!-- Palette for Ribbons -->
+    <RelativeLayout
+        android:id="@+id/palette_ribbons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightPink"
+        android:padding="10dp"
+        android:layout_below="@id/palette_selector"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_ribbons"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:scrollbars="horizontal"
+            android:clipToPadding="false"
+            android:paddingEnd="10dp" />
+    </RelativeLayout>
+
+    <!-- Canvas for dropped images -->
+    <RelativeLayout
+        android:id="@+id/canvas"
+        android:layout_width="match_parent"
+        android:layout_height="286dp"
+        android:layout_below="@id/palette_flowers"
+        android:layout_marginTop="-2dp"
+        android:background="@color/textSecondary" />
+
+    <!-- ScrollView for Menu Buttons -->
+    <ScrollView
+        android:id="@+id/menu_buttons_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/canvas"
+        android:padding="10dp"
+        android:scrollbars="horizontal">
+
+        <LinearLayout
+            android:id="@+id/menu_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_undo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Undo"
+                android:textColor="@android:color/white"
+                android:padding="12dp"
+                android:layout_marginEnd="5dp"
+                tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/button_rotate_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Rotate Left"
+                android:textColor="@android:color/white"
+                android:padding="12dp"
+                android:layout_marginEnd="5dp" />
+
+            <Button
+                android:id="@+id/button_rotate_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Rotate Right"
+                android:textColor="@android:color/white"
+                android:padding="12dp"
+                android:layout_marginEnd="5dp" />
+
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_background"
+                android:text="Delete"
+                android:textColor="@android:color/white"
+                android:padding="12dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Confirm Bouquet Button -->
+    <Button
+        android:id="@+id/button_confirm_bouquet"
+        android:layout_width="312dp"
+        android:backgroundTint="@color/buttonBackground"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/menu_buttons_scroll"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="10dp"
+        android:text="Confirm Bouquet" />
+</RelativeLayout>

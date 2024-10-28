@@ -21,7 +21,19 @@
         android:theme="@style/Theme.FleursOnTheGo"
         tools:targetApi="31">
         <activity
-            android:name=".views.BoquetCustomizationActivity"
+            android:name=".views.AllProductsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.MessagesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.AccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".views.BouquetCustomizationActivity"
             android:exported="false" />
         <activity
             android:name=".views.InputLoginOtpActivity"

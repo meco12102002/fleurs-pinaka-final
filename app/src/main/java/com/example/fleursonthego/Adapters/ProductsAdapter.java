@@ -1,8 +1,10 @@
 package com.example.fleursonthego.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.ProductViewHolder> {
 
-    private List<Product> productList;
+    private final List<Product> productList;
 
     public ProductsAdapter(List<Product> productList) {
         this.productList = productList;
@@ -31,11 +33,17 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.productName.setText(product.getName());
-        holder.productPrice.setText(String.valueOf(product.getPrice()));
 
+        // Logging to verify product data
+        // Set product name, category, price, and rating
+        holder.productName.setText(product.getProductName());
+        holder.productCategory.setText(product.getCategory());
+        holder.productPrice.setText(String.format("P%.2f", product.getPrice()));
+        holder.productRating.setText(String.format("Rating: %.1f", product.getRating()));
         // Load image using Glide
-        Glide.with(holder.itemView.getContext()).load(product.getImage()).into(holder.productImage); // Use getImage()
+        Glide.with(holder.itemView.getContext())
+                .load(product.getImage())
+                .into(holder.productImage);
     }
 
     @Override
@@ -46,12 +54,16 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView productName;
         TextView productPrice;
+        TextView productCategory; // New TextView for category
+        TextView productRating;   // New TextView for rating
         ImageView productImage;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.product_name);
             productPrice = itemView.findViewById(R.id.product_price);
+            productCategory = itemView.findViewById(R.id.product_category);
+            productRating = itemView.findViewById(R.id.product_rating);
             productImage = itemView.findViewById(R.id.product_image);
         }
     }

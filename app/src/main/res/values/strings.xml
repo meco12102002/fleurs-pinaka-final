@@ -43,4 +43,22 @@
     <string name="ribbons">Ribbons</string>
     <string name="flowers">Flowers</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_to_cart">add to cart</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="my_orders">My Orders</string>
+    <string name="increse_quantity">Increse Quantity</string>
+    <string name="decrease_quantity">Decrease Quantity</string>
+    <string name="hello_there">Hello there</string>
+    <string name="anniversary">Anniversary</string>
+    <string name="birthday">Birthday</string>
+    <string name="customize_order">Customize Order</string>
+    <string name="wedding">Wedding</string>
+    <string name="anniversaries">Anniversaries</string>
+    <string name="customize_orders">Customize Order</string>
+    <string name="categories">Categories</string>
+    <string name="weddings">Weddings</string>
+    <string name="birthdays">Birthdays</string>
+    <string name="our_featured_products">Our Featured Products</string>
+    <string name="product_name">Product Name</string>
+    <string name="category_name">Category Name</string>
 </resources>

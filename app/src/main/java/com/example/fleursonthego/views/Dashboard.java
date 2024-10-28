@@ -2,7 +2,10 @@ package com.example.fleursonthego.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fleursonthego.R;
-import com.example.fleursonthego.Adapters.ProductsAdapter; // Make sure to import your ProductsAdapter
-import com.example.fleursonthego.Models.Product; // Import your Product model
+import com.example.fleursonthego.Adapters.ProductsAdapter;
+import com.example.fleursonthego.Models.Product;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,30 +27,69 @@ import java.util.List;
 
 public class Dashboard extends AppCompatActivity {
 
-    private RecyclerView recyclerView; // Declare RecyclerView
+    private RecyclerView recyclerView;
+    private TextView viewAll;
+    private ImageButton customizeBouquetButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard); // Set the layout
 
-        // Initialize RecyclerView
-        recyclerView = findViewById(R.id.recyclerViewProducts); // Ensure this ID matches your layout
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set layout manager for RecyclerView
-
-        // Initialize button for customizing bouquet
-        Button customizeBouquetButton = findViewById(R.id.btn_customize_bouquet);
-
-        // Fetch products from the database
+        initializeViews();
+        setupRecyclerView();
+        setupListeners();
         fetchProducts();
+    }
 
-        // Set an OnClickListener to navigate to CustomizeBouquetActivity
-        customizeBouquetButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Dashboard.this,BoquetCustomizationActivity.class);
+    private void initializeViews() {
+        recyclerView = findViewById(R.id.recyclerViewProducts);
+        viewAll = findViewById(R.id.textViewViewAll);
+        customizeBouquetButton = findViewById(R.id.icon_customize_order);
+    }
+
+    private void setupRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setupListeners() {
+        viewAll.setOnClickListener(v -> {
+            Intent intent = new Intent(Dashboard.this, AllProductsActivity.class);
             startActivity(intent);
+        });
 
+        customizeBouquetButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Dashboard.this, BouquetCustomizationActivity.class);
+            startActivity(intent);
+        });
+
+        setupBottomNavigation();
+    }
+
+    private void setupBottomNavigation() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.nav_home) {
+                    startActivity(new Intent(Dashboard.this, Dashboard.class));
+                    return true;
+                } else if (item.getItemId() == R.id.nav_messages) {
+                    startActivity(new Intent(Dashboard.this, MessagesActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.nav_cart) {
+                    startActivity(new Intent(Dashboard.this, CartActivity.class));
+                    return true;
+                } else if (item.getItemId() == R.id.nav_account) {
+                    startActivity(new Intent(Dashboard.this, AccountActivity.class));
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         });
     }
+
     private void fetchProducts() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("products");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -54,14 +97,15 @@ public class Dashboard extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Product> productList = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Product product = snapshot.getValue(Product.class); // Make sure this matches your Product class structure
+                    Product product = snapshot.getValue(Product.class);
                     if (product != null) {
-                        productList.add(product); // Add product to the list
+                        Log.d("ProductsAdapter", "Binding Product: " + product.getProductName());
+                        productList.add(product);
                     }
                 }
-                // Update RecyclerView with fetched products
                 updateRecyclerView(productList);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle error if needed
@@ -70,8 +114,7 @@ public class Dashboard extends AppCompatActivity {
     }
 
     private void updateRecyclerView(List<Product> productList) {
-        // Declare adapter for RecyclerView
-        ProductsAdapter adapter = new ProductsAdapter(productList); // Initialize the adapter with the product list
-        recyclerView.setAdapter(adapter); // Set the adapter for the RecyclerView
+        ProductsAdapter adapter = new ProductsAdapter(productList);
+        recyclerView.setAdapter(adapter);
     }
 }
